@@ -88,6 +88,14 @@ class GildedRoseTest(unittest.TestCase):
         # Quality drops to 0 after the concert
         self.assertEqual(0, item.quality)
 
+    def test_backstage_quality_sell_in_greater_than_10(self):
+        item = create_item(name=ItemName.BACKSTAGE, sell_in=11, quality=20)
+        gilded_rose = GildedRose([item])
+        gilded_rose.update_quality()
+
+        # Quality increases normally
+        self.assertEqual(21, item.quality)
+
     def test_conjured_item_quality_and_sell_in(self):
         item = create_item(name=ItemName.CONJURED, sell_in=3, quality=6)
         gilded_rose = GildedRose([item])
@@ -106,6 +114,10 @@ class GildedRoseTest(unittest.TestCase):
         # Quality decreases by 4 when sell date is passed
         self.assertEqual(2, item.quality)
         self.assertEqual(-1, item.sell_in)
+
+    def test_item_string_format(self):
+        item = create_item(name="foo", sell_in=4, quality=4)
+        self.assertEqual("foo, 4, 4", str(item))
 
 
 if __name__ == '__main__':
