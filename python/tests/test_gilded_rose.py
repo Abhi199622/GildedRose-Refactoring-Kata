@@ -37,6 +37,14 @@ class GildedRoseTest(unittest.TestCase):
         # Aged Brie increases in quality as it gets older
         self.assertEqual(1, item.quality)
 
+    def test_aged_brie_item_quality_sell_date_passed(self):
+        item = Item(name="Aged Brie", sell_in=0, quality=0)
+        gilded_rose = GildedRose([item])
+        gilded_rose.update_quality()
+
+        # Aged Brie twice increase in quality when sell date is passed
+        self.assertEqual(2, item.quality)
+
     def test_aged_brie_item_quality_max(self):
         item = Item(name="Aged Brie", sell_in=2, quality=50)
         gilded_rose = GildedRose([item])
